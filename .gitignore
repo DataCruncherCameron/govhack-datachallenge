@@ -1,0 +1,8 @@
+external_data/
+
+# R files
+.RData
+.Rhistory
+
+# TODO: Remove
+arcgis/
