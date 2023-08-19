@@ -2,7 +2,7 @@ import duckdb
 import os 
 # Assuming uniform population distribution accross the lga's 
 def write_csv(self, name):
-    self.to_csv(os.path.join(os.getcwd(),'output_data',name))
+    self.to_csv(os.path.join(os.getcwd(),'output_data',name), header = True )
 duckdb.DuckDBPyRelation.write_csv = write_csv
 
 TRIPS = duckdb.read_csv(os.path.join(os.getcwd(), 'external_data', 'T_VISTA1218_V1.csv'), na_values='N/A')

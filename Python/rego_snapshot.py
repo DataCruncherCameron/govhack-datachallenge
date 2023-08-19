@@ -2,7 +2,7 @@ import duckdb
 import os
 
 def write_csv(self, name):
-    self.to_csv(os.path.join(os.getcwd(),'output_data',name))
+    self.to_csv(os.path.join(os.getcwd(),'output_data',name), header = True)
 duckdb.DuckDBPyRelation.write_csv = write_csv
 
 
