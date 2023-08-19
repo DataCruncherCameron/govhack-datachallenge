@@ -35,8 +35,5 @@ if  (Test-Path -Path external_data/Whole_Fleet_Vehicle_Registration_Snapshot_by_
 }
 else {
     Write-Host "Downloading Vehicle Registration Snapshot."
-    Invoke-WebRequest -o external_data/Whole_Fleet_Vehicle_Registration_Snapshot_by_Model_Q2_2023.csv 'https://vrpsaopendatastdlrs01.blob.core.windows.net/opendata/Registration_Licencing/2023/Whole_Fleet_Vehicle_Registration_Snapshot_by_Model_Q2_2023.csv' 
+    Invoke-WebRequest -o external_data/Whole_Fleet_Vehicle_Registration_Snapshot_by_Model_Q2_2023.csv "https://vicroadsopendatastorehouse.vicroads.vic.gov.au/opendata/Registration_Licencing/2023/Whole_Fleet_Vehicle_Registration_Snapshot_by_Postcode_Q2_2023.csv" 
 }
-
-
-
