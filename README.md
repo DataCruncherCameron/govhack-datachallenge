@@ -12,5 +12,5 @@ Our challenge was the **Explore the relationship between vehicle types and the u
 | `/external_data` | External datasets from the Victorian government and others. This is *not* checked-in to the repo for licencing reasons - it must be reconstructed from the data sources list. |
 | `/output_data` | Mappings and datasets we generated from the external datasets. |
 | `/R` | R scripts used to generate output data. |
-| `/SQL` | DuckDB SQL scripts used to generate output data. |
+| `/Python` | Python scripts used to generate output data. |
 
