@@ -1,9 +1,9 @@
 import duckdb 
 import os 
 # Assuming uniform population distribution accross the lga's 
-def load_csv(file):
-    pass
-    
+def write_csv(self, name):
+    self.to_csv(os.path.join(os.getcwd(),'output_data',name))
+duckdb.DuckDBPyRelation.write_csv = write_csv
 
 TRIPS = duckdb.read_csv(os.path.join(os.getcwd(), 'external_data', 'T_VISTA1218_V1.csv'), na_values='N/A')
 PERSONS = duckdb.read_csv(os.path.join(os.getcwd(), 'external_data', 'P_VISTA1218_V2.csv'), na_values='N/A')
@@ -119,7 +119,16 @@ trained_distances = duckdb.sql("""Select HOMELGA, round(median(P_TRAINED_DISTANC
                     where P_TRAINED_DISTANCE != 0
                     group by homelga order by median(P_TRAINED_DISTANCE)""")
 
-print(driven_distances)
-print(cycled_distances)
-print(trained_distances)
+# Trained distances
+duckdb.sql("select HOMELGA as LGA, MEDIAN_DISTANCE from trained_distances").write_csv('Median_Train_Travel_Dist.csv')
+duckdb.sql("select HOMELGA as LGA, MEAN_DISTANCE from trained_distances").write_csv('Mean_Train_Travel_Dist.csv')
+duckdb.sql("select HOMELGA as LGA, SAMPLE_STDDEV from trained_distances").write_csv('Stddev_Train_Travel_Dist.csv')
+# Cycled distances
+duckdb.sql("select HOMELGA as LGA, MEDIAN_DISTANCE from cycled_distances").write_csv('Median_Bicycle_Travel_Dist.csv')
+duckdb.sql("select HOMELGA as LGA, MEAN_DISTANCE from cycled_distances").write_csv('Mean_Bicycle_Travel_Dist.csv')
+duckdb.sql("select HOMELGA as LGA, SAMPLE_STDDEV from cycled_distances").write_csv('Stddev_Bicycle_Travel_Dist.csv')
+# Driven distances
+duckdb.sql("select HOMELGA as LGA, MEDIAN_DISTANCE from driven_distances").write_csv('Median_Vehicle_Travel_Dist.csv')
+duckdb.sql("select HOMELGA as LGA, MEAN_DISTANCE from driven_distances").write_csv('Mean_Vehicle_Travel_Dist.csv')
+duckdb.sql("select HOMELGA as LGA, SAMPLE_STDDEV from driven_distances").write_csv('Stddev_Vehicle_Travel_Dist.csv')
 # print(test)
