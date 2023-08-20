@@ -160,4 +160,18 @@ duckdb.sql("""select CASE WHEN HOMELGA not in ('Melton Shire', 'Moreland City') 
            WHEN HOMELGA  = 'Melton Shire' THEN 'MELTON CITY'
            WHEN HOMELGA  = 'Moreland City' THEN 'MERRI-BEK CITY' END
            as LGA, SAMPLE_STDDEV from driven_distances""").write_csv('Stddev_Vehicle_Travel_Dist.csv')
-# print(test)
+
+######################################## TRAINED DISTS PROPORTION
+
+#print(lga_person_dist)
+
+duckdb.sql("""
+select CASE WHEN HOMELGA not in ('Melton Shire', 'Moreland City') THEN upper(HOMELGA)
+            WHEN HOMELGA  = 'Melton Shire' THEN 'MELTON CITY'
+            WHEN HOMELGA  = 'Moreland City' THEN 'MERRI-BEK CITY' END
+            as LGA, sum(P_TRAINED_DISTANCE)/(sum(P_BICYCLED_DISTANCE)+ sum(P_TRAINED_DISTANCE)+
+               sum(P_DRIVEN_DISTANCE)) As trainProportion, 
+               from lga_person_dist
+               group by homelga
+               order by trainProportion         
+""").write_csv("Train_Travel_Proportion_LGA.csv")
