@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EVsAgainstRail</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="tableau-div"></div>            
+    <script type='module' src='https://prod-apsoutheast-a.online.tableau.com/javascripts/api/tableau.embedding.3.latest.min.js'></script>
+    <script>
+        async function GetTableauToken() {
+            // TODO: Make this URL nice
+            const url = 'https://bupf5objnc.execute-api.ap-southeast-2.amazonaws.com/getTableauJwt';
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                
+                // Read the response body as text
+                return await response.text();
+            } catch (error) {
+                console.error('Fetch error:', error);
+            }
+        }
+
+        async function InsertTableauDiv () {
+            // Create a custom element
+            const customElement = document.createElement('tableau-viz');
+
+            // Set attributes
+            customElement.setAttribute('id', 'tableau-viz');
+            customElement.setAttribute('src', 'https://prod-apsoutheast-a.online.tableau.com/t/unicornconsultants/views/govhack/EvAgainstRail');
+            customElement.setAttribute('width', '900');
+            customElement.setAttribute('height', '550');
+            customElement.setAttribute('hide-tabs', 'true');
+            customElement.setAttribute('toolbar', 'hidden');
+            var token = await GetTableauToken()
+            customElement.setAttribute('token', token);
+            console.log(token);
+            // Append to the DOM
+            const targetDiv = document.getElementById('tableau-div');
+            targetDiv.appendChild(customElement);
+        }
+
+        InsertTableauDiv();
+
+    </script>
+
+</body>
+</html>

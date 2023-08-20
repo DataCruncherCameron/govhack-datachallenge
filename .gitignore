@@ -1,4 +1,5 @@
 external_data/
+tableau/
 VISTA.zip
 # R files
 .RData
