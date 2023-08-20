@@ -120,15 +120,44 @@ trained_distances = duckdb.sql("""Select HOMELGA, round(median(P_TRAINED_DISTANC
                     group by homelga order by median(P_TRAINED_DISTANCE)""")
 
 # Trained distances
-duckdb.sql("select HOMELGA as LGA, MEDIAN_DISTANCE from trained_distances").write_csv('Median_Train_Travel_Dist.csv')
-duckdb.sql("select HOMELGA as LGA, MEAN_DISTANCE from trained_distances").write_csv('Mean_Train_Travel_Dist.csv')
-duckdb.sql("select HOMELGA as LGA, SAMPLE_STDDEV from trained_distances").write_csv('Stddev_Train_Travel_Dist.csv')
+duckdb.sql("""select 
+           CASE WHEN HOMELGA not in ('Melton Shire', 'Moreland City') THEN upper(HOMELGA)
+           WHEN HOMELGA  = 'Melton Shire' THEN 'MELTON CITY'
+           WHEN HOMELGA  = 'Moreland City' THEN 'MERRI-BEK CITY' END
+           as LGA, 
+           MEDIAN_DISTANCE from trained_distances""").write_csv('Median_Train_Travel_Dist.csv')
+duckdb.sql("""select CASE WHEN HOMELGA not in ('Melton Shire', 'Moreland City') THEN upper(HOMELGA)
+           WHEN HOMELGA  = 'Melton Shire' THEN 'MELTON CITY'
+           WHEN HOMELGA  = 'Moreland City' THEN 'MERRI-BEK CITY' END
+           as LGA, MEAN_DISTANCE from trained_distances""").write_csv('Mean_Train_Travel_Dist.csv')
+duckdb.sql("""select CASE WHEN HOMELGA not in ('Melton Shire', 'Moreland City') THEN upper(HOMELGA)
+           WHEN HOMELGA  = 'Melton Shire' THEN 'MELTON CITY'
+           WHEN HOMELGA  = 'Moreland City' THEN 'MERRI-BEK CITY' END
+           as LGA, SAMPLE_STDDEV from trained_distances""").write_csv('Stddev_Train_Travel_Dist.csv')
 # Cycled distances
-duckdb.sql("select HOMELGA as LGA, MEDIAN_DISTANCE from cycled_distances").write_csv('Median_Bicycle_Travel_Dist.csv')
-duckdb.sql("select HOMELGA as LGA, MEAN_DISTANCE from cycled_distances").write_csv('Mean_Bicycle_Travel_Dist.csv')
-duckdb.sql("select HOMELGA as LGA, SAMPLE_STDDEV from cycled_distances").write_csv('Stddev_Bicycle_Travel_Dist.csv')
+duckdb.sql("""select CASE WHEN HOMELGA not in ('Melton Shire', 'Moreland City') THEN upper(HOMELGA)
+           WHEN HOMELGA  = 'Melton Shire' THEN 'MELTON CITY'
+           WHEN HOMELGA  = 'Moreland City' THEN 'MERRI-BEK CITY' END
+           as LGA, MEDIAN_DISTANCE from cycled_distances""").write_csv('Median_Bicycle_Travel_Dist.csv')
+duckdb.sql("""select CASE WHEN HOMELGA not in ('Melton Shire', 'Moreland City') THEN upper(HOMELGA)
+           WHEN HOMELGA  = 'Melton Shire' THEN 'MELTON CITY'
+           WHEN HOMELGA  = 'Moreland City' THEN 'MERRI-BEK CITY' END
+           as LGA, MEAN_DISTANCE from cycled_distances""").write_csv('Mean_Bicycle_Travel_Dist.csv')
+duckdb.sql("""select CASE WHEN HOMELGA not in ('Melton Shire', 'Moreland City') THEN upper(HOMELGA)
+           WHEN HOMELGA  = 'Melton Shire' THEN 'MELTON CITY'
+           WHEN HOMELGA  = 'Moreland City' THEN 'MERRI-BEK CITY' END
+           as LGA, SAMPLE_STDDEV from cycled_distances""").write_csv('Stddev_Bicycle_Travel_Dist.csv')
 # Driven distances
-duckdb.sql("select HOMELGA as LGA, MEDIAN_DISTANCE from driven_distances").write_csv('Median_Vehicle_Travel_Dist.csv')
-duckdb.sql("select HOMELGA as LGA, MEAN_DISTANCE from driven_distances").write_csv('Mean_Vehicle_Travel_Dist.csv')
-duckdb.sql("select HOMELGA as LGA, SAMPLE_STDDEV from driven_distances").write_csv('Stddev_Vehicle_Travel_Dist.csv')
+duckdb.sql("""select CASE WHEN HOMELGA not in ('Melton Shire', 'Moreland City') THEN upper(HOMELGA)
+           WHEN HOMELGA  = 'Melton Shire' THEN 'MELTON CITY'
+           WHEN HOMELGA  = 'Moreland City' THEN 'MERRI-BEK CITY' END
+           as LGA, MEDIAN_DISTANCE from driven_distances""").write_csv('Median_Vehicle_Travel_Dist.csv')
+duckdb.sql("""select CASE WHEN HOMELGA not in ('Melton Shire', 'Moreland City') THEN upper(HOMELGA)
+           WHEN HOMELGA  = 'Melton Shire' THEN 'MELTON CITY'
+           WHEN HOMELGA  = 'Moreland City' THEN 'MERRI-BEK CITY' END
+           as LGA, MEAN_DISTANCE from driven_distances""").write_csv('Mean_Vehicle_Travel_Dist.csv')
+duckdb.sql("""select CASE WHEN HOMELGA not in ('Melton Shire', 'Moreland City') THEN upper(HOMELGA)
+           WHEN HOMELGA  = 'Melton Shire' THEN 'MELTON CITY'
+           WHEN HOMELGA  = 'Moreland City' THEN 'MERRI-BEK CITY' END
+           as LGA, SAMPLE_STDDEV from driven_distances""").write_csv('Stddev_Vehicle_Travel_Dist.csv')
 # print(test)
